@@ -13,13 +13,13 @@ exports.connect = async (query) => {
   await sql.connect(config);
   let res = { hasError: false, result: [], error: '' };
   try {
-    console.log(query);
     const result = await sql.query(query);
     sql.close();
     res.result = result.recordset;
     return res;
   } catch (err) {
     res.hasError = true;
-    return res.error;
+    res.error = err;
+    return res;
   }
 };

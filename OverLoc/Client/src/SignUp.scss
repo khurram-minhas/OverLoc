@@ -1,0 +1,231 @@
+.innerContainerSignUp {
+  background: #f2f2f2;
+  width: 100%;
+  height: 90%;
+  min-height: 90%;
+  display: flex;
+  justify-content: center;
+}
+.innerContainerChildSignUp {
+  background: white;
+  width: 80%;
+  height: 100%;
+  min-height: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.signUpFrom {
+  min-width: 100%;
+  padding-top: 2%;
+}
+.signUpFromInner {
+  min-width: 100%;
+}
+
+.signUpFromInnerRow {
+  min-width: 100%;
+  padding: 0.35%;
+}
+.row {
+  margin: 0px !important;
+}
+
+.formTitle {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 23px;
+  color: #000000;
+  text-align: left;
+}
+
+.formMandatory {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  text-align: right;
+  color: #9e9ead;
+}
+.formTextField {
+  background: #f5f5f5;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 50px;
+  padding: 20px;
+}
+.formTextFieldDescription {
+    height: 150px;
+  }
+.mandatoryParent {
+  align-self: center;
+}
+
+.phoneCode {
+  background: #f5f5f5;
+  border-radius: 5px;
+  border: none;
+  height: 50px;
+  width: 20%;
+  text-align: center;
+}
+
+.Apartment_type {
+  background: #f5f5f5;
+  border-radius: 5px;
+  border: none;
+  height: 50px;
+  width: 40%;
+  text-align: center;
+}
+.text-align-left {
+  text-align: left;
+}
+.align-items-center {
+  align-items: center;
+}
+.phoneTextField {
+  background: #f5f5f5;
+  border-radius: 5px;
+  border: none;
+  width: 50%;
+  height: 50px;
+  margin: 10px;
+  padding: 20px;
+  color: black;
+}
+.budgetMensuel{
+  background: #f5f5f5;
+  border-radius: 5px;
+  border: none;
+  width: 15%;
+  height: 50px;
+  margin: 10px;
+  padding: 20px;
+  color: black;
+}
+
+.dayAndMonth{
+  background: #f5f5f5;
+  border-radius: 5px;
+  border: none;
+  width: 15%;
+  height: 50px;
+  margin-right: 10px;
+  padding: 20px;
+  color: black;
+}
+.year{
+  background: #f5f5f5;
+  border-radius: 5px;
+  border: none;
+  width: 20%;
+  height: 50px;
+  margin-right: 10px;
+  padding: 20px;
+  color: black;
+}
+.submitButton{
+    background: #55297C;
+    border-radius: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 23px;
+    color: #FFFFFF;
+    padding: 10px;
+    margin: 20px;
+}
+
+.margin-auto{
+  margin: auto;
+}
+
+.height70{
+  height: 70%
+}
+
+.height80{
+  height: 80%;
+}
+.dropdown-check-list {
+  display: inline-block;
+  width: 30%;
+  background: #f5f5f5;
+  height: 50px;
+  padding: 1%;
+}
+
+.dropdown-check-list .anchor {    
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 5px;
+  border: none !important;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+.alignItemsCenter {
+  align-items: center;
+}
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+.flex {
+  display: flex;
+}
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  margin-left: -1%;
+  border: 1px solid #ccc;
+  border-top: none;
+  position: absolute;
+  background: white;
+  z-index: 1;
+  width: 28.5%;
+}
+
+.dropdown-check-list ul.items li {
+  list-style: none;
+  padding: 5%;
+}
+.marginleft5 {
+  margin-left: 5%;
+}
+.dropdown-check-list.visible .anchor {
+  color: #0094ff;
+}
+
+.dropdown-check-list.visible .items {
+  display: block;
+}
+
+.dropdown-checkbox {
+  width: 15px;
+  height: 15px;
+}

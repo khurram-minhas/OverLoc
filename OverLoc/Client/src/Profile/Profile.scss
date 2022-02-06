@@ -1,0 +1,143 @@
+.profileHeader {
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 10px;
+  height: 40%;
+  margin: 5%;
+}
+
+.w40 {
+  width: 40%;
+}
+.h100 {
+  height: 100%;
+}
+.minWH100 {
+  min-width: 100%;
+  min-height: 100%;
+}
+.minWH10040 {
+  min-width: 100%;
+  min-height: 40%;
+}
+.minWH10060 {
+  min-width: 100%;
+  min-height: 60%;
+}
+.paddingTop5 {
+  padding-top: 5%;
+}
+.centerAlignImage {
+  text-align: -webkit-center;
+  align-self: center;
+}
+
+.uploadImageIcon {
+  width: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  /* width: 230px; */
+  height: 250px;
+  border-radius: 50%;
+  border: 3px solid black;
+}
+
+.fa-save {
+  font-size: 50px;
+  cursor: pointer;
+}
+.save-parent {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.fa-camera {
+  font-size: 50px;
+  position: absolute;
+  bottom: 0px;
+  right: 130px;
+  color: #55297c;
+  cursor: pointer;
+}
+#upload-photo {
+  display: none;
+}
+
+.padding0 {
+  padding: 0px;
+}
+
+.profileDetail-profile {
+  color: #9e9ead;
+  font-size: 1.5rem;
+  border: none;
+  width: 50%;
+}
+
+.bodyUserAds {
+  height: 35%;
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  overflow: overlay;
+}
+
+.profileAdsRow {
+  background: #ffffff;
+  border-radius: 5px;
+  width: 80%;
+  height: 50%;
+  margin: auto;
+  margin-top: 2% !important;
+}
+
+.editPost {
+  color: #55297c;
+  font-family: Roboto;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  padding: 5%;
+  cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 50%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background-color: #008cba;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profilePicParent:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.profile-Name {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 2.5rem;
+  border: none;
+}

@@ -17,25 +17,14 @@ function Login({setRoute}) {
   const [isPasswordSelected, setIsPasswordSelected] = useState(false)
   const [username, setUserName] = useState(null)
   const [password, setPassword] = useState(null)
-  const [passInputField, setPassInputField] = useState(<input className="inputField" type="password" placeholder="Password" value={password} onKeyDown={onKeyDown} onChange={changePassword} />)
+  const [passInputField, setPassInputField] = useState(<input className="inputField" type="password" placeholder="Mot de passe" value={password} onKeyDown={onKeyDown} onChange={changePassword} />)
   const [passIcon, setPassIcon] = useState(<Lock onClick={e => onPasswordIcon(false)} className="passwordIcon" />)
   useEffect(() => {
     async function fetchData() {
-    //   const response = await rockFetchGet('api/Authentication/isValidToken');
-    //   if (response !== null) {
-
-    //   } else {
-    //     const response = await rockFetchGet('api/Authentication/accesscontrol');
-    //     if (response !== null) {
-    //       Cookies.set('token', response.jwtToken, { expires: 1 })
-    //       Cookies.set('refreshToken', response.refreshToken, { expires: 1 })
-    //       Cookies.set('userId', response.userId, { expires: 1 })
-    //       // localStorage.setItem('token', result.jwtToken);
-    //       // localStorage.setItem('refreshToken', result.refreshToken);
-    //       return null;
-    //     }
-    //     setReload(!reload)
-    //   }
+      const response = await rockFetchGet('/welcome');
+      if (response !== null) {
+        setRoute(ERoute.Welcome)
+      }
     }
     fetchData();
   }, [])
@@ -52,9 +41,6 @@ function Login({setRoute}) {
       setPassInputField(<input className="inputField" type="text" placeholder="Password" value={password} onChange={changePassword} />)
     }
   }
-  function openFormulatrixWebsite(e) {
-    window.open('http://www.formulatrix.com/', '_blank');
-  }
   async function changeUserName(e) {
     setUserName(e.target.value)
   }
@@ -70,8 +56,8 @@ function Login({setRoute}) {
   }
   async function onLoginClick(e) {
     showSnackBar('Logging in...')
-    const body = { username, password }
-    const result = await rockFetchPost('http://localhost:3000/login', body)
+    const body = { email: username, password }
+    const result = await rockFetchPost('/login', body)
     if (result === null) {
       showSnackBar('Authentication Failed!')
       // alert('Username or password is Invalid!');
@@ -83,7 +69,8 @@ function Login({setRoute}) {
     } else {
       showSnackBar('Login Successful!')
       Cookies.set('token', result.token, { expires: 1 })
-      Cookies.set('userId', result._id, { expires: 1 })
+      Cookies.set('userId', result.userId, { expires: 1 })
+      Cookies.set('userTypeId', result.userTypeId, { expires: 1 })
       setRoute(ERoute.Welcome)
       // localStorage.setItem('token', result.jwtToken);
       // localStorage.setItem('refreshToken', result.refreshToken);
@@ -104,6 +91,7 @@ function Login({setRoute}) {
           <img className="titleImage"
             src={Logo}
             alt='RM title'
+            width={700}
           />
         </div>
       </div>
@@ -124,7 +112,7 @@ function Login({setRoute}) {
               <User />
             </div>
             <div className="fields">
-              <input className="inputField" ref={userNameRef} placeholder="Email" value={username} onKeyDown={onKeyDown} onChange={changeUserName} autoFocus />
+              <input className="inputField" type='email' ref={userNameRef} placeholder="Email" value={username} onKeyDown={onKeyDown} onChange={changeUserName} autoFocus />
             </div>
             <div className="fields">
               {passInputField}
@@ -132,24 +120,16 @@ function Login({setRoute}) {
             </div>
             <div className="fields flex-x-center">
               <button className="loginButton" onClick={onLoginClick}>
-                <span className="buttonText">Login</span>
+                <span className="buttonText">SE CONNECTER</span>
               </button>
             </div>
             <div className="fields content-right-align">
-              <a className="forgetPassword">Forgot Password?</a>
+              <a className="forgetPassword">Mot de passe oublié ?</a>
+            </div>
+            <div className="fields content-right-align">
+              <a className="notRegister">Pas encore inscrit ?&nbsp;<div className='register' onClick={() =>setRoute(ERoute.SignUp)}>Inscription</div></a>
             </div>
           </div>
-          {/* <div className="row bottomDetails flex flex-space-between">
-            <div className="col-md-4 bottomDetailsCols">
-              Version {localStorage.getItem('version')}
-            </div>
-            <div className="col-md-4 bottomDetailsCols bottomDetailsColsSelected" onClick={openFormulatrixWebsite}>
-              Formulatrix Inc.
-            </div>
-            <div className="col-md-4 bottomDetailsCols">
-              ©2020
-            </div>
-          </div> */}
         </div>
 
       </div>

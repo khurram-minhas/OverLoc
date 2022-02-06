@@ -1,7 +1,7 @@
 .innerContainer{
     background: #F2F2F2;
     width: 100%;
-    height: auto;
+    height: 90%;
     min-height: 90%;
     display: flex;
     justify-content: center;
@@ -65,7 +65,6 @@
 }
 
 .titleImage{
-    margin-left: 20px;
     align-self: flex-start;
 }
 
@@ -152,7 +151,28 @@
     color: #F89723;
     justify-content: center;
 }
-
+.notRegister{
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    margin: auto;
+    display: flex;
+    color: black !important;
+}
+.register{
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    margin: auto;
+    color: #55297C !important;
+    cursor: pointer;
+}
 .forgetPassword{
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
     font-style: normal;

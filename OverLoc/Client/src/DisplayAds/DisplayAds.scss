@@ -1,0 +1,291 @@
+.titleDisplayAd {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: left;
+  color: #743ba5;
+  width: 80%;
+  margin-left: 18%;
+}
+
+.bodyApproveAds {
+  height: 70%;
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  overflow: overlay;
+}
+
+.unApprovedRow {
+  background: #ffffff;
+  border-radius: 5px;
+  width: 80%;
+  height: 20%;
+  margin: auto;
+  margin-top: 2% !important;
+}
+
+.profileDetail {
+  width: 10%;
+  align-self: center;
+}
+
+.profileName {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 23px;
+
+  color: #000000;
+}
+.profilePicture {
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  height: 50px;
+}
+.unApprovedPostDesc {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  text-align: left;
+  height: 80px;
+  font-size: 15px;
+  border-right: 3px solid;
+  overflow-y: auto;
+  margin: auto;
+  line-height: 21px;
+  width: 60%;
+  color: #000000;
+  padding-right: 7%;
+}
+
+.unApprovedPostDetails {
+  width: 30%;
+  padding: 1%;
+}
+
+.maxEstimatedCost {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 1000;
+  font-size: 25px;
+  line-height: 41px;
+  color: #000000;
+  text-align: left;
+}
+.w50 {
+  width: 50%;
+}
+.paddingLeft5 {
+  padding-left: 5%;
+}
+.budetDetails {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 21px;
+  text-align: left;
+  color: #743ba5;
+}
+
+.approveButton {
+  background: #55297c;
+  border-radius: 20px;
+  font-family: Roboto;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  padding: 5%;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.displayAdsHeader {
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 10px;
+  height: 15%;
+  width: 60%;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+.parentSearchBar {
+  border-radius: 5px;
+  width: 70%;
+  height: 40%;
+  margin-left: 15%;
+  margin-top: 3%;
+}
+.textField {
+  background: #f5f5f5;
+  border-radius: 5px;
+  width: 95%;
+  border: none;
+  padding-left: 70px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  color: #9e9ead;
+}
+.searchButton {
+  width: 20%;
+  padding: 1%;
+  height: 40%;
+  background: #55297c;
+  border-radius: 20px;
+  font-family: Roboto;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  /* padding: 5%; */
+  color: #ffffff;
+  cursor: pointer;
+  margin: auto;
+  margin-top: 1.5%;
+}
+
+.adDescriptionParent {
+  background: white;
+  width: 80%;
+  height: 0%;
+  min-height: 90%;
+  margin: auto;
+  border-radius: 5px;
+  padding: 5%;
+}
+
+.adForm {
+  min-width: 100%;
+  padding-top: 2%;
+  height: 95%;
+}
+
+.adTitle {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 23px;
+
+  color: #000000;
+}
+.adTitleBudget {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 23px;
+
+  color: #000000;
+}
+.textAlginRight {
+  text-align: right;
+}
+.textAlginLeft {
+  text-align: left;
+}
+.textAlignCenter {
+  text-align: center;
+}
+.reportAd {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  color: #9e9ead;
+  cursor: pointer;
+}
+
+.margin2 {
+  margin-top: 2% !important;
+}
+
+.rightAdDetail {
+  height: 200px;
+  border: 5px solid #55297c;
+  margin: auto;
+  padding: 5%;
+  width: 80%;
+  margin-top: 5%;
+  box-sizing: border-box;
+  text-align: -webkit-center;
+  border-radius: 51px;
+}
+.padding5 {
+  padding: 5%;
+}
+.h70 {
+  height: 70%;
+}
+.contacter {
+  width: 70%;
+  padding: 1%;
+  background: #55297c;
+  border-radius: 20px;
+  font-family: Roboto;
+  font-style: normal;
+  font-size: 20px;
+  height: 35px;
+  text-align: center;
+  /* padding: 5%; */
+  color: #ffffff;
+  cursor: pointer;
+  margin: auto;
+}
+
+.adTitleDetail {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  margin-top: 2%;
+  color: #9e9ead;
+}
+
+.adStartDetail {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  margin-top: 2%;
+  color: #9e9ead;
+}
+
+.adDescriptiveDetail {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  height: 100px;
+  line-height: 21px;
+  margin-top: 2%;
+  color: #000000;
+}
+
+.firstNameAd {
+  font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 23px;
+text-align: center;
+
+color: #000000;
+
+}

@@ -1,0 +1,106 @@
+.headerApproveAd {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  color: #743ba5;
+  height: 20%;
+  padding: 5%;
+}
+
+.bodyApproveAds {
+  height: 70%;
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  overflow: overlay;
+}
+
+.unApprovedRow {
+  background: #ffffff;
+  border-radius: 5px;
+  width: 80%;
+  height: 25%;
+  margin: auto;
+  margin-top: 2% !important;
+}
+
+.profileDetail {
+  width: 10%;
+  align-self: center;
+}
+
+.profileName {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 23px;
+
+  color: #000000;
+}
+
+.unApprovedPostDesc {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  text-align: left;
+  height: 80px;
+  overflow-y: auto;
+  font-size: 15px;
+  border-right: 3px solid;
+  margin: auto;
+  line-height: 21px;
+  width: 60%;
+  color: #000000;
+  padding-right: 7%;
+}
+
+.unApprovedPostDetails {
+  width: 30%;
+  padding: 1%;
+}
+
+.maxEstimatedCost {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 1000;
+  font-size: 25px;
+  line-height: 41px;
+  color: #000000;
+  text-align: left;
+}
+.w50 {
+  width: 50%;
+}
+.paddingLeft5 {
+  padding-left: 5%;
+}
+.budetDetails {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 21px;
+  text-align: left;
+  color: #743ba5;
+}
+
+.approveButton {
+  background: #55297c;
+  border-radius: 20px;
+  font-family: Roboto;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  padding: 5%;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.align-self-center {
+  align-self: center;
+}
