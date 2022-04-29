@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ApproveAds.scss';
 import useRockFetchGet, {useRockFetchPost} from '../utils/RockFetch';
-import { isNullOrUndefined } from '../utils/Global';
+import { isNullOrUndefined, TextAbstract } from '../utils/Global';
 import Avatar from '../Icon/img_avatar.png';
 
 export function ApproveAds() {
@@ -34,7 +34,7 @@ export function ApproveAds() {
             className='profilePicture'
           ></img>
         </div>
-        <div className='unApprovedPostDesc'>{posts.Description}</div>
+        <div className='unApprovedPostDesc'>{TextAbstract(posts.Description)}</div>
         <div className='unApprovedPostDetails flex'>
           <div className='w50 paddingLeft5'>
             <div className='maxEstimatedCost'>

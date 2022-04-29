@@ -1,5 +1,7 @@
 import React from 'react';
-export default function Footer(props:any) {
+import { ERoute } from './ERoute';
+
+export default function Footer({setRoute}:any) {
   return (
     <footer className='page-footer font-small blue pt-4'>
       <div className='container-fluid text-center text-md-left'>
@@ -43,17 +45,17 @@ export default function Footer(props:any) {
             </ul>
           </div> */}
           <div className='col-md-4 mb-md-0 mb-3'>
-            <h5 className='text-uppercase textAlignCenter on-link-hover' onClick={() => props.setType(10)}>
+            <h5 className='text-uppercase textAlignCenter on-link-hover' onClick={() => setRoute(ERoute.ConditionGenerales)}>
               Conditions générales d’utilisation
             </h5>
           </div>
           <div className='col-md-4 mb-md-0 mb-3'>
-            <h5 className='text-uppercase textAlignCenter on-link-hover' onClick={() => props.setType(11)}>
+            <h5 className='text-uppercase textAlignCenter on-link-hover' onClick={() => setRoute(ERoute.QuiSommes)}>
               Qui sommes-nous ?
             </h5>
           </div>
           <div className='col-md-4 mb-md-0 mb-3'>
-            <h5 className='text-uppercase textAlignCenter on-link-hover' onClick={() => props.setType(12)}>
+            <h5 className='text-uppercase textAlignCenter on-link-hover' onClick={() => setRoute(ERoute.Contracter)}>
               Nous contacter
             </h5>
           </div>

@@ -12,41 +12,9 @@ import { ERoute } from '../ERoute';
 import RMModal from '../RMModal/RMModal';
 import emailjs from '@emailjs/browser';
 
-function Contracter({ setRoute }) {
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+function Contracter() {
   const form = useRef();
-  const [displayModal, setDisplayModal] = useState(false);
-  const [errors, setErrors] = useState('');
-  const [description, setDescription] = useState('');
-  async function createAccount(e) {
-    e.preventDefault();
-    let error = '';
-    // console.log(document.getElementById('profileImage').files[0].name);
-    if (isNullOrUndefined(phone)) {
-      error += 'Please Insert Phone #!\n';
-    }
-    if (isNullOrUndefined(email) || !validateEmail(email)) {
-      error += 'Please Insert Email!\n';
-    }
-    if (isNullOrUndefined(description)) {
-      error += 'Please Insert Password!\n';
-    }
-    if (error !== '') {
-      showSnackBar(error);
-    }
-    let isError = false;
-    emailjs.sendForm(`gmail`, e.target, 'service_bxu4j0u').then(
-      (result) => {
-        alert('Message Sent, We will get back to you shortly', result.text);
-      },
-      (error) => {
-        showSnackBar('An error occurred, Please try again', error.text);
-        isError = true;
-      }
-    );
-    if (!isError) showSnackBar('Email successfuly sent!');
-  }
+  const [rockFetchGet] = useRockFetchGet();
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -68,16 +36,6 @@ function Contracter({ setRoute }) {
   };
   return (
     <div className='mainContainer'>
-      <RMModal
-        showModal={displayModal}
-        setShowModal={setDisplayModal}
-        onOk={() => setDisplayModal(false)}
-        body={errors}
-        heading='Cannot Signup'
-        okButtonText={'Ok'}
-        noButtonText={'Cancel'}
-        isOkOnly={true}
-      />
       <div className='innerContainerSignUp' align='center'>
         <div className='innerContainerChildSignUp height80' align='center'>
           <div className='row signUpFrom'>

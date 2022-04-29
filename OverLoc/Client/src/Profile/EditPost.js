@@ -9,7 +9,9 @@ import {
   validateEmail,
 } from '../utils/Global';
 import useRockFetchGet, { useRockFetchPost } from '../utils/RockFetch';
+import { Autocomplete, createFilterOptions, TextField } from '@mui/material';
 
+var zip_code = require('../utils/zip_code.json'); //with path
 function EditPost({ selectedPost, setSelectedPost }) {
   const [rockFetchPost] = useRockFetchPost();
   const [rockFetchGet] = useRockFetchGet();
@@ -29,27 +31,32 @@ function EditPost({ selectedPost, setSelectedPost }) {
   const [apartmentType, setApartmentType] = useState('');
   const [displayModal, setDisplayModal] = useState(false);
   const [errors, setErrors] = useState('');
-  useEffect(() =>{
-    if(!isNullOrUndefined(selectedPost)) {
-        setTitle(selectedPost.Title);
-        // setEmail(selectedPost.Email);
-        setPhoneNumer(selectedPost.PhoneNumber);
-        setPhoneCode(selectedPost.PhoneCode);
-        setAreaOfApartment(selectedPost.AreaOfApartment);
-        const date = new Date(selectedPost.StartDate)
-        setDob(date.getDate());
-        setMob(date.getMonth() + 1);
-        setYob(date.getFullYear());
-        setMinEstimatedBudget(selectedPost.MinEstimatedBudget);
-        setMaxEstimatedBudget(selectedPost.MaxEstimatedBudget);
-        setDescription(selectedPost.Description);
-        setApartmentType(selectedPost.ApartmentType)
-        if(!isNullOrUndefined(selectedPost.WeeksInMonth)) {
-            const weeks = selectedPost.WeeksInMonth.split(',');
-            setWeeksInMonth(weeks.map(w => parseInt(w)))
-        }
+  const OPTIONS_LIMIT = 50;
+  const defaultFilterOptions = createFilterOptions();
+  const filterOptions = (options, state) => {
+    return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
+  };
+  useEffect(() => {
+    if (!isNullOrUndefined(selectedPost)) {
+      setTitle(selectedPost.Title);
+      // setEmail(selectedPost.Email);
+      setPhoneNumer(selectedPost.PhoneNumber);
+      setPhoneCode(selectedPost.PhoneCode);
+      setAreaOfApartment(selectedPost.AreaOfApartment);
+      const date = new Date(selectedPost.StartDate);
+      setDob(date.getDate());
+      setMob(date.getMonth() + 1);
+      setYob(date.getFullYear());
+      setMinEstimatedBudget(selectedPost.MinEstimatedBudget);
+      setMaxEstimatedBudget(selectedPost.MaxEstimatedBudget);
+      setDescription(selectedPost.Description);
+      setApartmentType(selectedPost.ApartmentType);
+      if (!isNullOrUndefined(selectedPost.WeeksInMonth)) {
+        const weeks = selectedPost.WeeksInMonth.split(',');
+        setWeeksInMonth(weeks.map((w) => parseInt(w)));
+      }
     }
-  }, [selectedPost])
+  }, [selectedPost]);
   async function createPost(e) {
     e.preventDefault();
     let error = '';
@@ -62,7 +69,7 @@ function EditPost({ selectedPost, setSelectedPost }) {
     // if (isNullOrUndefined(phoneNumber)) {
     //   error += 'Please Insert Phone-Number!\n';
     // }
-    if(weeksInMonth.length === 0) {
+    if (weeksInMonth.length === 0) {
       error += 'Please choose weeks in a month!\n';
     }
     if (isNullOrUndefined(areaOfApartment)) {
@@ -70,7 +77,7 @@ function EditPost({ selectedPost, setSelectedPost }) {
     }
     const date = mob.toString() + '/' + dob.toString() + '/' + yob.toString();
     var dateFormat = 'MM/DD/YYYY';
-    const dateConverted = moment(date).format(dateFormat)
+    const dateConverted = moment(date).format(dateFormat);
     if (!moment(dateConverted, dateFormat, true).isValid()) {
       error += 'Please Insert a correct date\n';
     }
@@ -91,8 +98,8 @@ function EditPost({ selectedPost, setSelectedPost }) {
     const userId = Cookies.get('userId');
     let weeks = '';
     weeksInMonth.forEach((element, i) => {
-      if(i + 1 === weeksInMonth.length)  weeks += element
-      else  weeks += element + ','
+      if (i + 1 === weeksInMonth.length) weeks += element;
+      else weeks += element + ',';
     });
     const body = {
       title,
@@ -114,21 +121,22 @@ function EditPost({ selectedPost, setSelectedPost }) {
       return;
     }
 
-    showSnackBar('Ad updated!');
+    showSnackBar(
+      'Votre annonce est en attente d’approbation et sera de nouveau en ligne bientôt!'
+    );
     setSelectedPost(null);
   }
   function onWeekChange(week) {
-    if(weeksInMonth.find(w => w === week)) {
-      const filteredWeeks = weeksInMonth.filter(w => w !== week);
+    if (weeksInMonth.find((w) => w === week)) {
+      const filteredWeeks = weeksInMonth.filter((w) => w !== week);
       setWeeksInMonth(filteredWeeks);
-    }
-    else {
+    } else {
       setWeeksInMonth([...weeksInMonth, week]);
     }
   }
   useEffect(() => {
-    console.log(weeksInMonth)
-  }, [weeksInMonth])
+    console.log(weeksInMonth);
+  }, [weeksInMonth]);
   return (
     <div className='mainContainer margin-auto'>
       <RMModal
@@ -228,12 +236,23 @@ function EditPost({ selectedPost, setSelectedPost }) {
                     </div>
                     <div className='row signUpFromInnerRow'>
                       <div className='col-md-12'>
-                        <input
-                          type='text'
-                          className='formTextField'
-                          placeholder='check leboncoin.fr location tool'
-                          value={areaOfApartment}
-                          onChange={(e) => setAreaOfApartment(e.target.value)}
+                        <Autocomplete
+                          id='auto-complete'
+                          autoComplete
+                          includeInputInList
+                          options={zip_code}
+                          sx={{ width: '100%' }}
+                          renderInput={(params) => (
+                            <TextField {...params} variant='standard' />
+                          )}
+                          value={areaOfApartment} 
+                          filterOptions={filterOptions}
+                          onChange={(e) =>
+                            !isNullOrUndefined(e.target.value) &&
+                            e.target.value.length > 100
+                              ? null
+                              : setAreaOfApartment(e.target.value)
+                          }
                         />
                       </div>
                     </div>
@@ -286,31 +305,84 @@ function EditPost({ selectedPost, setSelectedPost }) {
                     </div>
                   </div>
                   <div className='row signUpFromInnerRow'>
-                    <div className='col-md-12 text-align-left'>
+                    <div className='col-md-7 text-align-left'>
                       <div
                         id='list1'
                         class='dropdown-check-list'
                         tabindex='100'
                       >
-                        <span class='anchor' onClick={() => setCheckBoxesVisibility(!checkBoxesVisibility)}>Select Week's</span>
-                        <ul class='items' style={{display: checkBoxesVisibility ? 'block' : 'none'}}>
+                        <span
+                          class='anchor'
+                          onClick={() =>
+                            setCheckBoxesVisibility(!checkBoxesVisibility)
+                          }
+                        >
+                          Select Week's
+                        </span>
+                        <ul
+                          class='items'
+                          style={{
+                            display: checkBoxesVisibility ? 'block' : 'none',
+                          }}
+                        >
                           <li className='flex alignItemsCenter'>
-                            <input className='dropdown-checkbox' disabled={weeksInMonth.length === 3 && !weeksInMonth.find(w => w === 1)} checked={weeksInMonth.find(w => w === 1)} type='checkbox' onChange={() => onWeekChange(1)}/>
+                            <input
+                              className='dropdown-checkbox'
+                              disabled={
+                                weeksInMonth.length === 3 &&
+                                !weeksInMonth.find((w) => w === 1)
+                              }
+                              checked={weeksInMonth.find((w) => w === 1)}
+                              type='checkbox'
+                              onChange={() => onWeekChange(1)}
+                            />
                             <div className='marginleft5'>Week-1</div>
                           </li>
                           <li className='flex alignItemsCenter'>
-                            <input className='dropdown-checkbox' disabled={weeksInMonth.length === 3 && !weeksInMonth.find(w => w === 2)} checked={weeksInMonth.find(w => w === 2)} type='checkbox' onChange={() => onWeekChange(2)}/>
+                            <input
+                              className='dropdown-checkbox'
+                              disabled={
+                                weeksInMonth.length === 3 &&
+                                !weeksInMonth.find((w) => w === 2)
+                              }
+                              checked={weeksInMonth.find((w) => w === 2)}
+                              type='checkbox'
+                              onChange={() => onWeekChange(2)}
+                            />
                             <div className='marginleft5'>Week-2</div>
                           </li>
                           <li className='flex alignItemsCenter'>
-                            <input className='dropdown-checkbox' disabled={weeksInMonth.length === 3 && !weeksInMonth.find(w => w === 3)} checked={weeksInMonth.find(w => w === 3)} type='checkbox' onChange={() => onWeekChange(3)}/>
+                            <input
+                              className='dropdown-checkbox'
+                              disabled={
+                                weeksInMonth.length === 3 &&
+                                !weeksInMonth.find((w) => w === 3)
+                              }
+                              checked={weeksInMonth.find((w) => w === 3)}
+                              type='checkbox'
+                              onChange={() => onWeekChange(3)}
+                            />
                             <div className='marginleft5'>Week-3</div>
                           </li>
                           <li className='flex alignItemsCenter'>
-                            <input className='dropdown-checkbox' disabled={weeksInMonth.length === 3 && !weeksInMonth.find(w => w === 4)} checked={weeksInMonth.find(w => w === 4)} type='checkbox' onChange={() => onWeekChange(4)}/>
+                            <input
+                              className='dropdown-checkbox'
+                              disabled={
+                                weeksInMonth.length === 3 &&
+                                !weeksInMonth.find((w) => w === 4)
+                              }
+                              checked={weeksInMonth.find((w) => w === 4)}
+                              type='checkbox'
+                              onChange={() => onWeekChange(4)}
+                            />
                             <div className='marginleft5'>Week-4</div>
                           </li>
                         </ul>
+                      </div>
+                    </div>
+                    <div className='col-md-5 man'>
+                      <div className='formMandatory'>
+                        ( when you are NOT in your flat )
                       </div>
                     </div>
                   </div>

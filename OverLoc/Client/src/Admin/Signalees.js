@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ApproveAds.scss';
 import useRockFetchGet, {useRockFetchPost} from '../utils/RockFetch';
-import { isNullOrUndefined } from '../utils/Global';
+import { isNullOrUndefined, TextAbstract } from '../utils/Global';
 import Avatar from '../Icon/img_avatar.png';
 
 export default function Signalees() {
@@ -14,8 +14,8 @@ export default function Signalees() {
       if (isNullOrUndefined(res)) return;
       const filteredResult = [];
       res.forEach(ad => {
-          if(filteredResult.findIndex(r => r.AdId === ad.AdId) < 0) {
-              const reportedAdCount = res.filter(rAd => rAd.AdId === ad.AdId).length
+          if(filteredResult.findIndex(r => r.ID === ad.ID) < 0) {
+              const reportedAdCount = res.filter(rAd => rAd.ID === ad.ID).length
             filteredResult.push({...ad, count: reportedAdCount});
 
           }
@@ -35,14 +35,14 @@ export default function Signalees() {
     return unApprovedPosts.map((posts) => (
       <div className='unApprovedRow flex'>
         <div className='profileDetail'>
-          <div className='profileName'>{posts.FirstName}</div>
+          <div className='profileName'>{posts.FirstName.split(' ')[0]}</div>
           <img
             src={posts && posts.ProfilePic ? posts.ProfilePic : Avatar}
             alt='Avatar'
             className='profilePicture'
           ></img>
         </div>
-        <div className='unApprovedPostDesc'>{posts.Description}</div>
+        <div className='unApprovedPostDesc'>{TextAbstract(posts.Description)}</div>
         <div className='unApprovedPostDetails flex'>
           <div className='w50 paddingLeft5'>
             <div className='maxEstimatedCost'>

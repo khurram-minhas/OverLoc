@@ -15,7 +15,7 @@ import QuiSommes from '../FooterRoutes/QuiSommes';
 import Contracter from '../FooterRoutes/Contacter';
 import { ERoute } from '../ERoute';
 export function Admin({ type, setRoute }) {
-  const [index, setIndex] = useState(0);
+  const [localRoute, setLocalRoute] = useState(ERoute.DisplayAds);
   const [rockFetchPost] = useRockFetchPost();
   const [user, setUser] = useState();
   useEffect(() => {
@@ -38,7 +38,7 @@ export function Admin({ type, setRoute }) {
                 src={Logo}
                 alt='RM title'
                 width={700}
-                onClick={() => setIndex(0)}
+                onClick={() => setLocalRoute(ERoute.DisplayAds)}
                 style={{cursor: 'pointer'}}
               />
             </div>
@@ -47,30 +47,30 @@ export function Admin({ type, setRoute }) {
             style={{ width: '60%', display: 'flex', placeContent: 'center' }}
           >
             <div
-              onClick={() => setIndex(0)}
-              className={index === 0 ? 'headerItem' : 'unselectedHeaderItem'}
-              style={{ zIndex: index === 0 ? 2 : 1, cursor: 'pointer' }}
+              onClick={() => setLocalRoute(ERoute.DisplayAds)}
+              className={localRoute === ERoute.DisplayAds ? 'headerItem' : 'unselectedHeaderItem'}
+              style={{ zIndex: localRoute === ERoute.DisplayAds ? 2 : 1, cursor: 'pointer' }}
             >
               <div className='headerItemText'>ACCUEIL</div>
             </div>
             <div
-              onClick={() => setIndex(1)}
-              className={index === 1 ? 'headerItem' : 'unselectedHeaderItem'}
-              style={{ zIndex: index === 1 ? 2 : 1, cursor: 'pointer' }}
+              onClick={() => setLocalRoute(ERoute.UnApproved)}
+              className={localRoute === ERoute.UnApproved ? 'headerItem' : 'unselectedHeaderItem'}
+              style={{ zIndex: localRoute === ERoute.UnApproved ? 2 : 1, cursor: 'pointer' }}
             >
               <div className='headerItemText'>EN ATTENTE</div>
             </div>
             <div
-              onClick={() => setIndex(2)}
-              className={index === 2 ? 'headerItem' : 'unselectedHeaderItem'}
-              style={{ zIndex: index === 2 ? 2 : 1, cursor: 'pointer' }}
+              onClick={() => setLocalRoute(ERoute.Reported)}
+              className={localRoute === ERoute.Reported ? 'headerItem' : 'unselectedHeaderItem'}
+              style={{ zIndex: localRoute === ERoute.Reported ? 2 : 1, cursor: 'pointer' }}
             >
               <div className='headerItemText'>SIGNALÉES</div>
             </div>
             <div
-              onClick={() => setIndex(3)}
-              className={index === 3 ? 'headerItem' : 'unselectedHeaderItem'}
-              style={{ zIndex: index === 3 ? 2 : 1, cursor: 'pointer' }}
+              onClick={() => setLocalRoute(ERoute.Profile)}
+              className={localRoute === ERoute.Profile ? 'headerItem' : 'unselectedHeaderItem'}
+              style={{ zIndex: localRoute === ERoute.Profile ? 2 : 1, cursor: 'pointer' }}
             >
               <div className='headerItemText'>MON COMPTE</div>
             </div>
@@ -83,7 +83,7 @@ export function Admin({ type, setRoute }) {
             <div class='dropdown'>
               <div className='flex'>
                 <div className='userNameDashboard'>
-                  Bonjour {isNullOrUndefined(user) ? 'User' : user.FirstName}!
+                  Bonjour {user && user.FirstName ? user.FirstName : 'User'}!
                 </div>
                 <img
                   src={user && user.ProfilePic ? user.ProfilePic : Avatar}
@@ -110,21 +110,22 @@ export function Admin({ type, setRoute }) {
           </div>
         </div>
 
-        <div className='innerContainer'>
-          {index === 0 && (
-            <DisplayAds setRoute={setRoute} setIndex={setIndex} />
-          )}
-          {index === 1 && <ApproveAds setRoute={setRoute} />}
-          {index === 2 && <Singalees setIndex={setIndex} />}
-          {index === 3 && (
-            <Profile user={user} setUser={setUser} setIndex={setIndex} />
-          )}
-          {index === 10 && <ConditionGenerales />}
-          {index === 11 && <QuiSommes />}
-          {index === 12 && <Contracter setRoute={setIndex} />}
+        <div className='innerContainer alignItemsCenter'>
+          {(localRoute === ERoute.DisplayAds || localRoute === ERoute.AdPage) ? <DisplayAds tabIndex={localRoute} setTabIndex={setLocalRoute}  user={user}/> : null}
+          
+          
+          {localRoute === ERoute.UnApproved && <ApproveAds setRoute={setLocalRoute} />}
+          {localRoute === ERoute.Reported && <Singalees setIndex={setLocalRoute} />}
+          {localRoute === ERoute.Profile && user ? (
+            <Profile user={user} setUser={setUser} />
+          ) : null}
+          {localRoute === ERoute.CreatePost ? <CreatePost setRoute={setLocalRoute} /> : null}
+          {localRoute === ERoute.ConditionGenerales && <ConditionGenerales />}
+          {localRoute === ERoute.QuiSommes && <QuiSommes />}
+          {localRoute === ERoute.Contracter && <Contracter />}
         </div>
       </div>
-      <Footer setType={setIndex} />
+      <Footer setRoute={setLocalRoute} />
     </>
   );
 }

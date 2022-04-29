@@ -3,7 +3,7 @@
   border: 1px solid #ffffff;
   box-sizing: border-box;
   border-radius: 10px;
-  height: 40%;
+  height: 70%;
   margin: 5%;
 }
 
@@ -28,13 +28,17 @@
 .paddingTop5 {
   padding-top: 5%;
 }
+
+.padding1 {
+  padding: 1%;
+}
 .centerAlignImage {
   text-align: -webkit-center;
   align-self: center;
 }
 
 .uploadImageIcon {
-  width: 50%;
+  width: 50% !important;
   cursor: pointer;
   object-fit: cover;
   /* width: 230px; */
@@ -72,7 +76,7 @@
   color: #9e9ead;
   font-size: 1.5rem;
   border: none;
-  width: 50%;
+  width: 70%;
 }
 
 .bodyUserAds {

@@ -10,7 +10,7 @@ import {
   Marker,
   InfoWindow,
 } from 'react-google-maps';
-import { isNullOrUndefined, showSnackBar } from '../utils/Global';
+import { getWeeksInMonths, isNullOrUndefined, showSnackBar } from '../utils/Global';
 //   import * as parkData from "./data/skateboard-parks.json";
 //   import mapStyles from "./mapStyles";
 
@@ -30,7 +30,7 @@ function Map() {
 const MapWrapped = withScriptjs(withGoogleMap(Map));
 let lat = 41.739685;
 let lng = -87.55442;
-export default function AdPage({ post }) {
+export default function AdPage({ post, loggedInUser }) {
   const [rockFetchPost] = useRockFetchPost();
   const [rockFetchGet] = useRockFetchGet();
   const [user, setUser] = useState();
@@ -42,7 +42,7 @@ export default function AdPage({ post }) {
       );
       const responseJson = await response.json();
       console.log('Lat: ', responseJson);
-      const res = await rockFetchPost('/getUser/', { userId: post.UserId });
+      const res = await rockFetchPost('/getUserDetail/', { userId: post.UserId });
       if (isNullOrUndefined(res)) return;
       setUser(res[0]);
     }
@@ -61,6 +61,10 @@ export default function AdPage({ post }) {
     return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
   }
   async function reportAd() {
+    if(isNullOrUndefined(loggedInUser)) {
+      showSnackBar('Veuillez vous connecter pour signaler cette annonce!')
+      return null;
+    }
     const userId = Cookies.get('userId');
     const res = await rockFetchPost('/reportAd/', {
       adId: post.ID,
@@ -69,7 +73,13 @@ export default function AdPage({ post }) {
     if (isNullOrUndefined(res)) return;
     showSnackBar('Cette annonce a été signalée avec succès!');
   }
-
+  function showPostUserDetail() {
+    if(isNullOrUndefined(loggedInUser)) {
+      showSnackBar('Veuillez vous connecter pour voir les détails!')
+      return null;
+    }
+    setDisplayContactDetails(true)
+  }
   return (
     <div className='row adForm'>
       <div className='adDescriptionParent'>
@@ -82,7 +92,7 @@ export default function AdPage({ post }) {
         </div>
         <div className='row w100 margin2'>
           <div className='w70'>
-            <div style={{ height: '100%' }}>
+            <div style={{ height: '300px' }}>
               <MapWrapped
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBWW7cm7K05c9lGUlblo-oyBXH_rqTx7BI`}
                 loadingElement={<div style={{ height: `100%` }} />}
@@ -91,7 +101,8 @@ export default function AdPage({ post }) {
               />
             </div>
             <div className='adTitleDetail'>
-              {post.ApartmentType}&nbsp;&nbsp;|&nbsp;&nbsp;Weeks{' '}
+              {post.ApartmentType}&nbsp;&nbsp;|&nbsp;&nbsp;Available Weeks{' '}
+              {/* {getWeeksInMonths(post.WeeksInMonth)} */}
               {post.WeeksInMonth}
               &nbsp;&nbsp;|&nbsp;&nbsp;
               {post.AreaOfApartment}
@@ -112,7 +123,7 @@ export default function AdPage({ post }) {
                     style={{
                       width: '80px',
                       borderRadius: '50%',
-                      marginLeft: 10,    
+                      // marginLeft: 10,    
                       objectFit: 'cover',
                       height: '75px',
                     }}
@@ -122,14 +133,14 @@ export default function AdPage({ post }) {
                   <div className='firstNameAd'>
                     {user ? user.FirstName : ''}
                   </div>
-                  <div>{user ? user.University : ''}</div>
+                  <div className='textAlignCenter'>{user ? user.University : ''}</div>
                 </div>
               </div>
               {!displayContactDetails ? (
                 <div
                   className='contacter'
                   onClick={
-                    () => setDisplayContactDetails(true)
+                    () => showPostUserDetail()
                     // window.open('tel://' + post.PhoneCode + post.PhoneNumber)
                   }
                 >

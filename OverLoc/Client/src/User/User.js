@@ -4,7 +4,7 @@ import Avatar from '../Icon/img_avatar.png';
 import useRockFetchGet, { useRockFetchPost } from '../utils/RockFetch';
 import CreatePost from '../CreatePost/CreatePost';
 import Cookies from 'js-cookie';
-import { clearCookies, isNullOrUndefined } from '../utils/Global';
+import { clearCookies, isNullOrUndefined, showSnackBar } from '../utils/Global';
 import Profile from '../Profile/Profile';
 import { DisplayAds } from '../DisplayAds/DisplayAds';
 import Footer from '../Footer';
@@ -13,12 +13,14 @@ import ConditionGenerales from '../FooterRoutes/Conditions-generales';
 import QuiSommes from '../FooterRoutes/QuiSommes';
 import Contracter from '../FooterRoutes/Contacter';
 export function User({ type, setRoute }) {
-  const [index, setIndex] = useState(0);
+  const [localRoute, setLocalRoute] = useState(ERoute.DisplayAds);
   const [rockFetchPost] = useRockFetchPost();
   const [user, setUser] = useState();
+  const [totalCreatedAds, setTotalCreatedAds] = useState(0);
   useEffect(() => {
     async function fetchData() {
       const userId = Cookies.get('userId');
+      if(isNullOrUndefined(userId)) return;
       const res = await rockFetchPost('/getUser/', { userId });
       if (isNullOrUndefined(res)) return;
       setUser(res[0]);
@@ -36,7 +38,8 @@ export function User({ type, setRoute }) {
                 src={Logo}
                 alt='RM title'
                 width={700}
-                onClick={() => setIndex(0)} style={{cursor: 'pointer'}}
+                onClick={() => setLocalRoute(ERoute.DisplayAds)}
+                style={{ cursor: 'pointer' }}
               />
             </div>
           </div>
@@ -44,26 +47,39 @@ export function User({ type, setRoute }) {
             style={{ width: '60%', display: 'flex', placeContent: 'center' }}
           >
             <div
-              onClick={() => setIndex(0)}
-              className={index === 0 ? 'headerItem' : 'unselectedHeaderItem'}
-              style={{ zIndex: index === 0 ? 2 : 1, cursor: 'pointer' }}
+              onClick={() => setLocalRoute(ERoute.DisplayAds)}
+              className={localRoute === ERoute.DisplayAds ? 'headerItem' : 'unselectedHeaderItem'}
+              style={{ zIndex: localRoute === ERoute.DisplayAds ? 2 : 1, cursor: 'pointer' }}
             >
               <div className='headerItemText'>Accueil</div>
             </div>
-            <div
-              onClick={() => setIndex(1)}
-              className={index === 1 ? 'headerItem' : 'unselectedHeaderItem'}
-              style={{ zIndex: index === 1 ? 2 : 1, cursor: 'pointer' }}
-            >
-              <div className='headerItemText'>Mon Compte</div>
-            </div>
-            <div
-              onClick={() => setIndex(2)}
-              className={index === 2 ? 'headerItem' : 'unselectedHeaderItem'}
-              style={{ zIndex: index === 2 ? 2 : 1, cursor: 'pointer' }}
-            >
-              <div className='headerItemText'>Déposer un annonce</div>
-            </div>
+            {!isNullOrUndefined(user) ? (
+              <>
+                <div
+                  onClick={() => setLocalRoute(ERoute.Profile)}
+                  className={
+                    localRoute === ERoute.Profile ? 'headerItem' : 'unselectedHeaderItem'
+                  }
+                  style={{ zIndex: localRoute === ERoute.Profile ? 2 : 1, cursor: 'pointer' }}
+                >
+                  <div className='headerItemText'>Mon Compte</div>
+                </div>
+                <div
+                  onClick={() => {
+                    if(totalCreatedAds < 3)  
+                      setLocalRoute(ERoute.CreatePost)
+                    else
+                      showSnackBar('You have already created 3 ads!')
+                  }}
+                  className={
+                    localRoute === ERoute.CreatePost ? 'headerItem' : 'unselectedHeaderItem'
+                  }
+                  style={{ zIndex: localRoute === ERoute.CreatePost ? 2 : 1, cursor: 'pointer' }}
+                >
+                  <div className='headerItemText'>Déposer un annonce</div>
+                </div>
+              </>
+            ) : null}
           </div>
 
           <div
@@ -73,7 +89,7 @@ export function User({ type, setRoute }) {
             <div class='dropdown'>
               <div className='flex'>
                 <div className='userNameDashboard'>
-                  Bonjour {isNullOrUndefined(user) ? 'User' : user.FirstName}!
+                Bonjour {user && user.FirstName ? user.FirstName : 'User'}!
                 </div>
                 <img
                   src={user && user.ProfilePic ? user.ProfilePic : Avatar}
@@ -94,35 +110,32 @@ export function User({ type, setRoute }) {
                   setRoute(ERoute.Login);
                 }}
               >
-                <i class='fa fa-sign-out' aria-hidden='true'></i> Log out
+                {isNullOrUndefined(user) ? (
+                  <>
+                    <i class='fa fa-sign-in' aria-hidden='true'></i> Log in
+                  </>
+                ) : (
+                  <>
+                    <i class='fa fa-sign-out' aria-hidden='true'></i> Log out
+                  </>
+                )}
               </div>
             </div>
           </div>
         </div>
 
-        <div className='innerContainer'>
-          {/* <div className='login flex-y-center flex-column'>
-          <div className='loginHeading flex-y-center flex-column'>
-            <div>Bonjour !</div>
-            <div className='loginSubHeading'>{getBody()}!</div>
-          </div>
-
-          <div className='loginForm flex-y-center flex-column'>
-            You are logged in!
-          </div>
-        </div> */}
-          {index === 0 ? <DisplayAds setIndex={setIndex} /> : null}
-          {index === 1 ? (
-            <Profile user={user} setUser={setUser} setIndex={setIndex} />
+        <div className='innerContainer alignItemsCenter'>
+          {(localRoute === ERoute.DisplayAds || localRoute === ERoute.AdPage) ? <DisplayAds tabIndex={localRoute} setTabIndex={setLocalRoute} setTotalCreateAds={setTotalCreatedAds}  user={user}/> : null}
+          {localRoute === ERoute.Profile && user ? (
+            <Profile user={user} setUser={setUser} setTotalCreatedAds={setTotalCreatedAds} totalCreatedAds={totalCreatedAds}/>
           ) : null}
-          {index === 2 ? <CreatePost setIndex={setIndex} /> : null}
-          
-          {index === 10 && <ConditionGenerales />}
-          {index === 11 && <QuiSommes />}
-          {index === 12 && <Contracter setRoute={setIndex} />}
+          {localRoute === ERoute.CreatePost ? <CreatePost setRoute={setLocalRoute} /> : null}
+          {localRoute === ERoute.ConditionGenerales && <ConditionGenerales />}
+          {localRoute === ERoute.QuiSommes && <QuiSommes />}
+          {localRoute === ERoute.Contracter && <Contracter />}
         </div>
       </div>
-      <Footer setType={setIndex} />
+      <Footer setRoute={setLocalRoute} />
     </>
   );
 }

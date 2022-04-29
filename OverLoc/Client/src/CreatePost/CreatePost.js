@@ -9,8 +9,11 @@ import {
   validateEmail,
 } from '../utils/Global';
 import useRockFetchGet, { useRockFetchPost } from '../utils/RockFetch';
+import { ERoute } from '../ERoute';
+import { Autocomplete, createFilterOptions, TextField } from '@mui/material';
+var zip_code = require('../utils/zip_code.json'); //with path
 
-function CreatePost({ setIndex }) {
+function CreatePost({ setRoute }) {
   const [rockFetchPost] = useRockFetchPost();
   const [rockFetchGet] = useRockFetchGet();
   const [title, setTitle] = useState('');
@@ -95,7 +98,7 @@ function CreatePost({ setIndex }) {
     }
 
     showSnackBar('Votre annonce a été soumise et sera bientôt approuvée par l’un de nos modérateurs!');
-    setIndex(0);
+    setRoute(ERoute.DisplayAds);
   }
   function onWeekChange(week) {
     if(weeksInMonth.find(w => w === week)) {
@@ -109,6 +112,11 @@ function CreatePost({ setIndex }) {
   useEffect(() => {
     console.log(weeksInMonth)
   }, [weeksInMonth])
+  const OPTIONS_LIMIT = 50;
+  const defaultFilterOptions = createFilterOptions();
+  const filterOptions = (options, state) => {
+    return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
+  };
   return (
     <div className='mainContainer margin-auto'>
       <RMModal
@@ -208,13 +216,30 @@ function CreatePost({ setIndex }) {
                     </div>
                     <div className='row signUpFromInnerRow'>
                       <div className='col-md-12'>
-                        <input
+                      <Autocomplete
+                          id='auto-complete'
+                          autoComplete
+                          includeInputInList
+                          options={zip_code}
+                          sx={{ width: '100%' }}
+                          renderInput={(params) => (
+                            <TextField {...params} variant='standard' />
+                          )}
+                          filterOptions={filterOptions}
+                          onChange={(e) =>
+                            !isNullOrUndefined(e.target.value) &&
+                            e.target.value.length > 100
+                              ? null
+                              : setAreaOfApartment(e.target.value)
+                          }
+                        />
+                        {/* <input
                           type='text'
                           className='formTextField'
                           placeholder='check leboncoin.fr location tool'
                           value={areaOfApartment}
                           onChange={(e) => setAreaOfApartment(e.target.value)}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -266,7 +291,7 @@ function CreatePost({ setIndex }) {
                     </div>
                   </div>
                   <div className='row signUpFromInnerRow'>
-                    <div className='col-md-12 text-align-left'>
+                    <div className='col-md-7 text-align-left'>
                       <div
                         id='list1'
                         class='dropdown-check-list'
@@ -292,6 +317,9 @@ function CreatePost({ setIndex }) {
                           </li>
                         </ul>
                       </div>
+                    </div>
+                    <div className='col-md-5 man'>
+                      <div className='formMandatory'>( when you are NOT in your flat )</div>
                     </div>
                   </div>
                 </div>
