@@ -118,7 +118,7 @@ app.post('/getUser', auth, async (req, res) => {
 app.get('/isValidToken', auth, async (req, res) => {
   res.status(200).json(response.result);
 });
-app.get('/getAllUserAds', auth, async (req, res) => {
+app.get('/getAllUserAds', async (req, res) => {
   const response = await connection.connect(
     'select uAd.*, u.FirstName, u.profilePic, u.Email from UserAds as uAd join Users as u on uAd.UserId = u.ID where approveStatus = 1'
   );
@@ -183,6 +183,7 @@ app.post('/insertCountries', auth, async (req, res) => {
 
 app.post('/insertUser', async (req, res) => {
   let encryptedPassword = await bcrypt.hash(req.body.password, 10);
+  let uni = req.body.university.replace("'", "''")
   const query =
     "INSERT INTO users (firstName, email, dob, university, gender, userTypeId, password ) VALUES ('" +
     req.body.firstName +
@@ -194,7 +195,7 @@ app.post('/insertUser', async (req, res) => {
     req.body.dob +
     "'," +
     "'" +
-    req.body.university +
+    uni +
     "'," +
     "'" +
     req.body.gender +
@@ -206,6 +207,7 @@ app.post('/insertUser', async (req, res) => {
     encryptedPassword +
     "'" +
     ')';
+    console.log(query)
   const response = await connection.connect(query);
   if (response.hasError) res.status(400).json(response.error);
   else {

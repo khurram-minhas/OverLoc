@@ -1,16 +1,16 @@
-const sql = require('mssql/msnodesqlv8');
+const sql = require('mssql');
 
 // config for your database
 const config = {
+  user: "sa",
+  password: "12345OHdf%e",
+  server: 'localhost',
   database: 'OverLoc',
-  server: 'KHURRAMLAPTOP\\SQLEXPRESS',
-  driver: 'msnodesqlv8',
-  options: {
-    trustedConnection: true,
-  },
+  trustServerCertificate: true,
 };
+
 exports.connect = async (query) => {
-  await sql.connect(config);
+  await sql.connect(config)
   let res = { hasError: false, result: [], error: '' };
   try {
     const result = await sql.query(query);

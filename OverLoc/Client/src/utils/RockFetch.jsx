@@ -14,7 +14,7 @@ export async function fetcher(
   asJson = false,
   forceFetch = false,
 ) {
-  url = 'http://192.168.10.26:4051' + url;
+  url = 'http://localhost:4051' + url;
   if (cache[url] && !forceFetch) {
     console.log('Returning from cache :', url);
     return cache[url].clone();
